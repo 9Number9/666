@@ -87,10 +87,11 @@
 
             .boton {
                 margin-top: 30px !important;
-                font-size: 14vw !important;
+                font-size: 15vw !important;
             }
+
             .datos {
-                margin-bottom: -150px !important;
+                margin-bottom: -60px !important;
             }
         }
 
@@ -135,8 +136,10 @@
                     <h1> <button class="boton" id="validarButton" style="width: 5px!important;">INGRESAR</button></h1>
                 </div>
             </div>
-            <h1 class="boton" id="textoOculto2" style="display: none;">¡Corre...te queda poco tiempo: MENTALMESS!</h1>
-            <h1 class="boton" id="textoOculto3" style="display: none;">¡WARNING --- CODIGO ERRONEO --- ¡WARNING!</h1>
+            <h1 class="boton" id="textoOculto2" style="display: none;">¡Corre...te queda poco tiempo: </h1>
+            <h1 class="boton" id="cadenaComprobada"></h1>
+            <h1 class="boton" id="textoOculto3" style="display: none;"> -- ¡WARNING! -- CODIGO ERRONEO -- ¡WARNING! --
+            </h1>
         </div>
     </div>
 
@@ -147,13 +150,13 @@
     <script>
         var audio = document.getElementById("miAudio");
         var comenzarButton = document.getElementById("comenzarButton");
-        var validarButton = document.getElementById("validarButton")
+        var validarButton = document.getElementById("validarButton");
         var textoOculto1 = document.getElementById("textoOculto1");
         var textoOculto2 = document.getElementById("textoOculto2");
         var textoOculto3 = document.getElementById("textoOculto3");
         var textoOculto4 = document.getElementById("textoOculto4");
         var miCaja = document.getElementById("miCaja");
-        miCaja.style.display = "none"; //Oculta la caja 
+        miCaja.style.display = "none"; // Oculta la caja
 
         function procesarEnter(event) {
             if (event.key === "Enter") {
@@ -161,30 +164,40 @@
             }
         }
 
-        validarButton.style.display = "none"
+        validarButton.style.display = "none";
         // Agrega un controlador de eventos para el clic en el botón
         comenzarButton.addEventListener("click", function () {
             audio.play(); // Inicia la reproducción de audio al hacer clic en "COMENZAR"
             comenzarButton.style.display = "none"; // Oculta el botón "COMENZAR"
             validarButton.style.display = "none";
             textoOculto1.style.display = "block"; // Muestra el texto oculto
-            miCaja.style.display = "block"; //Oculta la caja 
+            miCaja.style.display = "block"; // Oculta la caja
             miCaja.focus();
         });
 
         function validarContenido() {
             var textoIngresado = miCaja.value.trim().toLowerCase();
             miCaja.value = ""; // Limpia el contenido de la caja de texto
-            if (textoIngresado === "mods") {
+
+            var cadenaOfuscada = String.fromCharCode(110, 111, 32, 116, 101, 32, 100, 101, 115, 32, 118, 117, 101, 108, 116, 97);
+
+            var cadenaComprobada = String.fromCharCode(87, 69, 76, 67, 79, 77, 69, 32, 84, 79, 32, 72, 69, 76, 76);
+
+            if (textoIngresado === cadenaOfuscada) {
                 textoOculto2.style.display = "block"; // Muestra el texto oculto 2
                 textoOculto3.style.display = "none"; // Oculta el texto oculto 3
+                
+                var elementoCadenaComprobada = document.getElementById("cadenaComprobada");
+                elementoCadenaComprobada.textContent = cadenaComprobada;
+                elementoCadenaComprobada.style.display = "block";
             } else {
                 textoOculto2.style.display = "none"; // Oculta el texto oculto 2
                 textoOculto3.style.display = "block"; // Muestra el texto oculto 3
             }
         }
-        validarButton.addEventListener("click",validarContenido)
-        miCaja.addEventListener("keydown",procesarEnter)
+
+        validarButton.addEventListener("click", validarContenido);
+        miCaja.addEventListener("keydown", procesarEnter);
     </script>
 </body>
 
